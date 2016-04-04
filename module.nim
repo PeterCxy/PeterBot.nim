@@ -59,21 +59,25 @@ macro module*(body: stmt): stmt {.immediate.} =
         p.body.insert 0, parseStmt("var res: JsonNode = nil")
         p.body.insert 0, parseStmt("var msg = msg")
 
-        for j in 0.. <p.body.len:
-          case p.body[j].kind
-          of nnkCommand:
-            if p.body[j][0].ident.`$` == "reply":
-              # Convient "reply" command
-              let expr = p.body[j][1]
-              p.body[j] = parseStmt("""
+        # Add convenient methods
+        proc preProcess(b: NimNode) =
+          for j in 0.. <b.len:
+            case b[j].kind
+            of nnkCommand:
+              if b[j][0].ident.`$` == "reply":
+                # Convenient "reply" command
+                let expr = b[j][1]
+                b[j] = parseStmt("""
 res = await sendMessage(text = "placeholder",
   chat_id = msg["chat"]["id"].num.`$`,
   reply_to_message_id = msg["message_id"].num.`$`)
 """)
-              #echo treeRepr p.body[j]
-              p.body[j][0][1][1][1][1] = expr
-          else:
-            discard
+                b[j][0][1][1][1][1] = expr
+            else:
+              if b[j].len > 0:
+                preProcess b[j]
+
+        preProcess p.body
 
         result.add p
         result.add parseStmt("addCommand(\"$1\", cmd_$1)" % name)
