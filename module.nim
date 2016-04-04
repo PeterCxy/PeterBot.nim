@@ -99,6 +99,10 @@ template checkNull*() {.immediate.} =
   if msg == nil or msg.kind != JObject:
     return newFuture[void]()
 
+template checkText*() {.immediate.} =
+  if not msg.hasKey "text":
+    return newFuture[void]()
+
 module:
   cmd help:
     expect 1
