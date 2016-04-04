@@ -29,7 +29,9 @@ module:
     expect 1
     reply args.join(" ")
 
-  help remind: "/remind - Reminds you of something after a specific period of time."
+  help remind: """
+/remind - Reminds you of something after a specific period of time.
+This is an interactive command. I'll ask you several questions when you call this command."""
   cmd remind:
     reply "What to remind you of?"
     msg = await readMsg(msg)

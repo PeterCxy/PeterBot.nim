@@ -78,7 +78,7 @@ res = await sendMessage(text = "placeholder",
         result.add p
         result.add parseStmt("addCommand(\"$1\", cmd_$1)" % name)
       elif $body[i][0].ident == "help":
-        result.add parseStmt("addHelp(\"$1\", \"$2\")" % [$body[i][1].ident, body[i][2][0].strVal])
+        result.add parseStmt("addHelp(\"$1\", \"$2\")" % [$body[i][1].ident, body[i][2][0].strVal.replace("\n", "\\n")])
     else:
       discard
 
