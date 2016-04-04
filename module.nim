@@ -112,7 +112,10 @@ module:
       help = HELPS[@1]
 
     reply help
+  cmd cancel:
+    cancelReader msg
 
   help help: "/help [command] - Get help for [command]"
+  help cancel: "/cancel - Cancel the ongoing operation"
 
 
