@@ -46,7 +46,10 @@ proc main() {.async} =
       if msg == nil:
         continue
 
-      let text = msg["text"].str
+      let text = (if msg.hasKey("text"):
+        msg["text"].str
+      else:
+        "")
 
       if text.startsWith("/") or text.startsWith("'"):
         # A command starts with "/" or "'"
