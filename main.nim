@@ -64,6 +64,8 @@ proc main() {.async} =
 
         # Forward command to the corresponding module
         asyncCheck callCommand(cmd, msg, args)
+      else:
+        handleNonCommand(msg)
 
 asyncCheck main()
 runForever()
