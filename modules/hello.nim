@@ -1,7 +1,7 @@
 import json, asyncdispatch, strutils
 
-import telegram
-import module as _
+import ../telegram
+import ../module as _
 
 proc parseTime(str: string): int =
   result = 0
@@ -26,7 +26,7 @@ module:
 
   help echo: "/echo arguments... - Echo the arguments"
   cmd echo:
-    expect 1
+    expectArgs 1
     reply args.join(" ")
 
   help remind: """

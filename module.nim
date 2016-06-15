@@ -94,7 +94,7 @@ template expect*(cond: bool) {.immediate.} =
     asyncCheck callCommand("help", msg, @[cmd])
     return newFuture[void]()
 
-template expect*(argNum: int) {.immediate.} =
+template expectArgs*(argNum: int) {.immediate.} =
   if args.len < argNum:
     asyncCheck callCommand("help", msg, @[cmd])
     return newFuture[void]()
@@ -109,7 +109,7 @@ template checkText*() {.immediate.} =
 
 module:
   cmd help:
-    expect 1
+    expectArgs 1
     var help = "Command " & @1 & " not found."
 
     if HELPS.hasKey(@1):
@@ -121,5 +121,3 @@ module:
 
   help help: "/help [command] - Get help for [command]"
   help cancel: "/cancel - Cancel the ongoing operation"
-
-

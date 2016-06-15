@@ -11,7 +11,7 @@ macro loadConfig(file: string): stmt =
       break
     let key = l[0].strip
     let val = l[1..(l.len - 1)].join(":").strip
-    
+
     if key == "modules":
       # Import modules
       for m in val.split ",":
